@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hello World</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 2rem; display: grid; place-items: center; min-height: 100vh; }
+    .wrap { text-align: center; max-width: 32rem }
+    h1 { font-size: 2.25rem; margin: 0 0 1rem }
+    .hint { color: #666; margin: 0 0 1.25rem }
+    button { font-size: 1rem; border: 0; padding: .85rem 1.1rem; border-radius: .75rem; cursor: pointer; }
+  </style>
+  <script>
+    function openInSafari(url) {
+      // Try both Safari URL schemes for maximum compatibility
+      const xSafariScheme = `x-safari-https://${url.replace(/^https?:\/\//, '')}`;
+      const legacyScheme  = `com-apple-mobilesafari-tab:${url}`;
+
+      // Try newer scheme first (iOS 15/17/18, macOS)
+      setTimeout(() => { location.href = xSafariScheme; }, 100);
+
+      // Then try legacy scheme (older iOS, iOS 16)
+      setTimeout(() => { location.href = legacyScheme; }, 600);
+
+      // Fallback to normal URL if neither works
+      setTimeout(() => { location.href = url; }, 1500);
+    }
+
+    // Simple in-app browser detection for Instagram
+    function isInstagramInApp() {
+      const ua = navigator.userAgent || navigator.vendor || "";
+      return /Instagram/i.test(ua);
+    }
+
+    // Auto-run on load if inside Instagram’s webview
+    document.addEventListener("DOMContentLoaded", () => {
+      if (isInstagramInApp()) {
+        // Use the current page URL so it re-opens this page directly in Safari
+        openInSafari(window.location.href);
+      }
+    });
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Hello World</h1>
+    <p class="hint">If this is opened inside Instagram’s browser, we’ll try to open it in Safari automatically.</p>
+    <button onclick="openInSafari(window.location.href)">Open in Safari</button>
+  </div>
+</body>
+</html>
