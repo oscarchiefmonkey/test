@@ -27,10 +27,18 @@
       setTimeout(() => { location.href = url; }, 1500);
     }
 
+    // Simple in-app browser detection for Instagram
+    function isInstagramInApp() {
+      const ua = navigator.userAgent || navigator.vendor || "";
+      return /Instagram/i.test(ua);
+    }
+
     // Auto-run on load if inside Instagram’s webview
     document.addEventListener("DOMContentLoaded", () => {
-      // openInSafari(window.location.href);
-      openInSafari("https://www.google.com");
+      if (isInstagramInApp()) {
+        // Use the current page URL so it re-opens this page directly in Safari
+        openInSafari(window.location.href);
+      }
     });
   </script>
 </head>
